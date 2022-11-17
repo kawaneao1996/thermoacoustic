@@ -108,6 +108,39 @@ Xu = 2.0 / I / Yu * DJ1J0(I * Yu)
 
 K0 = omega/Ss
 
-K = K0 * cmath.sqrt(( 1.0 + (Gem - 1.0) * Xa) / (1.0 - Xu))
+K = K0 * cmath.sqrt(( 1.0 + (Gam - 1.0) * Xa) / (1.0 - Xu))
+
+Mtube = np.array([[0,0],[0,0]], dtype=complex)
+Mtube1 = np.array([[0,0],[0,0]], dtype=complex)
+
+f = open('./myfile.txt', 'a', encoding='UTF-8')
 
 
+for N in range(1,Nmax):
+  X = N * dx
+
+  Mtube[0][0]=cmath.cos(K * X)
+  Mtube[0][1]=-(I * omega * rhom)/(K * (1-Xu)) *  cmath.sin(K * X)
+  Mtube[1][0]=(K * (1-Xu))/(i * omega * rhom) *  cmath.sin(K * X)  
+  Mtube[1][1]=cmath.cos(K * X)
+
+  P = P0 * Mtube[0][0] + U0 * Mtube[0][1]
+  U = P0 * Mtube[1][0] + U0 * Mtube[1][1]
+
+  Pamp = abs(P)
+  Uamp = abs(U)
+
+  Pphi = math.atan2(P.imag, P.real) # = cmath.phase(P)
+  Uphi = math.atan2(U.imag, U.real)
+
+  phi = Uphi - Pphi
+
+  tmp = P * U.comjugate()
+  
+  W = 0.5 * tmp.real
+
+  datalist = [X,Pamp,Uamp,Pphi,W]
+
+  f.writelines(datalist)
+  
+f.close()
