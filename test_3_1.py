@@ -84,7 +84,7 @@ def bussei (Tm,Pm):
     # Cプラントル数
     Pr =Mu / Kappa *Cp
     # C音速
-    Ss =math.sqrt(Gam * Pm /rhom )
+    Ss =cmath.sqrt(Gam * Pm /rhom )
 
     return rhom,Mu,Kappa,Gam,Cp,Nyu,Alpha,Pr,Ss
 
@@ -94,8 +94,8 @@ wta = (r * r) * omega / (2.0 * Alpha)
 
 wtu = (r * r) * omega / (2.0 * Nyu)
 
-Ya = complex(1.0,1.0) * complex(math.sqrt(wta), 0.0)
-Yu = complex(1.0,1.0) * complex(math.sqrt(wtu), 0.0)
+Ya = complex(1.0,1.0) * complex(cmath.sqrt(wta), 0.0)
+Yu = complex(1.0,1.0) * complex(cmath.sqrt(wtu), 0.0)
 
 def DJ1J0 (Z):
     J0 = sp.besselj(0,Z)
@@ -105,4 +105,9 @@ def DJ1J0 (Z):
 
 Xa = 2.0 / I / Ya * DJ1J0(I * Ya)
 Xu = 2.0 / I / Yu * DJ1J0(I * Yu)
+
+K0 = omega/Ss
+
+K = K0 * cmath.sqrt(( 1.0 + (Gem - 1.0) * Xa) / (1.0 - Xu))
+
 
