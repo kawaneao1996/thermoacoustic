@@ -4,7 +4,7 @@ import numpy as np
 import sympy as sp
 import os
 
-flag_forward = True #進行波が正の方向に進行する/False だと負の方向に進む
+flag_forward = False #進行波が正の方向に進行する/False だと負の方向に進む
 
 # program tubeの内容
 ##############
@@ -16,7 +16,7 @@ N : int  = 0
 Nmax : int = 100 #管の分割数
 
 # 管の形状など
-Pm = 101.0 * 10**2 #mean pressure
+Pm = 101.0 * 10**3 #mean pressure
 r = 10.5 * 10**(-3) #radious of tube
 L = 1.00    #length of tube
 A = r * r * pi #cross-sectional area of tube
@@ -47,7 +47,7 @@ def bussei (Tm,Pm):
         +4.7881*(10**(-5))*Tm*Tm
         -6.2842*(10**(-8))*Tm*Tm*Tm
         +4.2339*(10**(-11))*Tm*Tm*Tm*Tm
-        -1.1472*(10**(-14))*Tm*Tm*Tm*Tm*Tm)*Pm/101.0
+        -1.1472*(10**(-14))*Tm*Tm*Tm*Tm*Tm)*Pm/(101.0 * 10**(3))
     # C粘性係数
     Mu = -7.0031*(10**(-6))               
     +0.14018*(10**(-6))*Tm           
@@ -121,7 +121,7 @@ for N in range(1,Nmax):
 
   Mtube[0][0]=cmath.cos(K * X)
   Mtube[0][1]=-(I * omega * rhom)/(K * (1-Xu)) *  cmath.sin(K * X)
-  Mtube[1][0]=(K * (1-Xu))/(i * omega * rhom) *  cmath.sin(K * X)  
+  Mtube[1][0]=(K * (1-Xu))/(I * omega * rhom) *  cmath.sin(K * X)  
   Mtube[1][1]=cmath.cos(K * X)
 
   P = P0 * Mtube[0][0] + U0 * Mtube[0][1]
@@ -135,12 +135,13 @@ for N in range(1,Nmax):
 
   phi = Uphi - Pphi
 
-  tmp = P * U.comjugate()
+  tmp = P * (U.conjugate())
   
   W = 0.5 * tmp.real
 
-  datalist = [X,Pamp,Uamp,Pphi,W]
-
-  f.writelines(datalist)
+  print(X,Pamp,Uamp,Pphi,W,file=f)
+  # datalist = [X,Pamp,Uamp,Pphi,W]
+  # line = str(datalist)
+  # f.writelines(line)
   
 f.close()
