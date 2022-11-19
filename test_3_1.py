@@ -4,7 +4,7 @@ import numpy as np
 import sympy as sp
 import os
 
-flag_forward = False #進行波が正の方向に進行する/False だと負の方向に進む
+flag_forward = True #進行波が正の方向に進行する/False だと負の方向に進む
 
 # program tubeの内容
 ##############
