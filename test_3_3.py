@@ -81,8 +81,8 @@ def DJ1J0 (Z):
     J0 = jv(0, Z)
     J1 = jv(1, Z)
     # print("Z" , Z)
-    print("J0" , J0)
-    print("J1" , J1)
+    #print("J0" , J0)
+    #print("J1" , J1)
     rslt = J1 / J0
     if (J0 == complex(float("nan"),float("nan"))):
         return 0
@@ -199,7 +199,7 @@ def main():
     ######################
     # エンタルピーの計算 #
     ######################
-    Ha = 0.011 * Iin
+    Ha = 0.12 * Iin
 
     Mff = ME
     DelX=Lstack/bmax        #管の刻み幅
