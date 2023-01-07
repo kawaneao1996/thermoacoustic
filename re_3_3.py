@@ -60,10 +60,35 @@ def main():
     Uin = complex(3.4 * (10**3)/(9.0 * rhom * Ss), 0.0)
 
     Iin = 0.5 * (Pin.conjugate() * Uin).real
-    Ha = 0.5 * Iin
+    # Ha = 0.5 * Iin
+    step_num = 10000
+    bairitu = 2
+
+    tmp_sum_step = step_num * bairitu * 2
+    step_diff = Iin / step_num
+
+    H = bairitu * Iin * (-1)
+
+    diff_min = abs(Tb)
+    
+
+    for i in range(tmp_sum_step):
+
+        Pout,Uout,Iout,Tout = ret_results(H,Pin,Uin)
+        diff = abs(Tout - Tb)
+
+        if(diff < diff_min):
+            diff_min = diff
+            Ha = H
+
+        H += step_diff
+        print("\r" + str(i) + "/" + str(tmp_sum_step) + ",diff_min =" + str(diff_min), end="")
+
     Pout,Uout,Iout,Tout = ret_results(Ha,Pin,Uin)
     
-    # In -> Iout , Tm -> Toutに変数名を変えた（3.forから変更）
+    # In -> Iout , Tm -> Toutに変数名を変えた（上田先生の3.forから変更）
+    print("")
+    print("Ha:", Ha)
     print("想定温度", Tb)
     print("計算の結果得られた出口温度",Tout)
     print("差",Tb - Tout)
