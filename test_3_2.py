@@ -86,23 +86,23 @@ Uin=complex(1.777853001082 * (10**(-3)),8.733481219974 * (10**(-5)))
 
 Iin = 0.5 * (Pin.conjugate() * Uin).real
 
-Mff = np.identity(2,dtype=complex)
+Mff = ME = np.identity(2,dtype=complex) 
 # 計算の入口終わり----------------------------------------------
 
 DelX=Lstack/bmax        #管の刻み幅
 dTm=(TH-Tc)/Lstack      #温度勾配
 
-for b in range(1,bmax + 1):
+for b in range(1,bmax):
     Tm = Tc+dTm*DelX*b
     rhom,Mu,Kappa,Gam,Cp,Nyu,Alpha,Pr,Ss = bussei(Tm,Pm)
-    wtu =R**2*w/(2.0*Nyu ) #このあたりの記号の使い方はは富永著の熱音響工学の基礎を参照
-    wta =R**2*w/(2.0*Alpha )
+    wtu =((R**2)*w)/(2.0*Nyu ) #このあたりの記号の使い方はは富永著の熱音響工学の基礎を参照
+    wta =((R**2)*w)/(2.0*Alpha )
 
-    Ya = complex(1.0,1.0)*complex(cmath.sqrt(wta),0.0)
+    Ya = complex(1.0,1.0)*complex(cmath.sqrt(wta),0.0) # ここ*complex()って必要？
     Yu = complex(1.0,1.0)*complex(cmath.sqrt(wtu),0.0)
 
-    Xa = 2.0/I/Ya*DJ1J0(I*Ya)
-    Xu = 2.0/I/Yu*DJ1J0(I*Yu)
+    Xa = ((2.0/I)/Ya)*DJ1J0(I*Ya)
+    Xu = ((2.0/I)/Yu)*DJ1J0(I*Yu)
 
     Ms[0,0] = 0.0
     Ms[0,1] = (-I*w*rhom)/(1.0-Xu)

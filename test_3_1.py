@@ -137,8 +137,7 @@ for N in range(1,Nmax):
 
   tmp = P * (U.conjugate())
   
-  W = 0.5 * tmp.real
-
+  W = 0.5 * tmp.real * A
   print(X,Pamp,Uamp,Pphi,W,file=f)
   # datalist = [X,Pamp,Uamp,Pphi,W]
   # line = str(datalist)
